@@ -4,7 +4,7 @@ import shutil
 from datetime import date
 from pathlib import Path
 
-from summarize import summarize
+from summarize import generate_haiku, summarize
 
 BASE = Path(r"C:\Users\param\Documents\Projects\Slothly")
 INBOX = BASE / "inbox"
@@ -31,7 +31,7 @@ def process_file(path: Path) -> str | None:
     else:
         return None
 
-    report = f"# Slothly — {date.today():%Y-%m-%d}\n\n{summary}\n"
+    report = f"# Slothly — {date.today():%Y-%m-%d}\n\n{summary}\n\n{generate_haiku(text)}\n"
     REPORTS.mkdir(parents=True, exist_ok=True)
     (REPORTS / f"{date.today():%Y-%m-%d}.md").write_text(report, encoding="utf-8")
     shutil.move(str(path), str(ARCHIVE / path.name))

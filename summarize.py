@@ -23,6 +23,20 @@ def summarize(text: str, model: str = "llama3.2") -> str:
     return completion.choices[0].message.content.strip()
 
 
+def generate_haiku(text: str, model: str = "llama3.2") -> str:
+    prompt = (
+        "You are Slothly, a lazy but brilliant assistant. "
+        "Write a short, calming sloth-themed haiku (5-7-5) "
+        "inspired by the user's day. Return only the haiku, nothing else.\n\n" + text
+    )
+    completion = client.chat.completions.create(
+        model=model,
+        messages=[{"role": "user", "content": prompt}],
+        max_tokens=100,
+    )
+    return completion.choices[0].message.content.strip()
+
+
 if __name__ == "__main__":
     import sys
 
